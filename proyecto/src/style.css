@@ -1,68 +1,178 @@
-* {
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
+        /* --- Base y Tipografía --- */
+        :root {
+            --color-fondo: #f4f4f9;
+            --color-calculadora: #ffffff;
+            --color-texto: #333333;
+            --color-sombra: rgba(0, 0, 0, 0.15);
+            --color-operador: #ff9500; /* Naranja de iOS */
+            --color-numero: #e0e0e0;
+            --color-igual: #5cb85c; /* Verde para el igual */
+        }
 
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background: #101010;
-  margin: 0;
-}
+        /* Usamos la fuente Inter para un look moderno */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif; 
+        }
 
-.calculadora {
-  background: #1e1e1e;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.5);
-  width: 300px;
-}
+        body {
+            background-color: var(--color-fondo);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
 
-#pantalla {
-  width: 100%;
-  height: 60px;
-  font-size: 2em;
-  text-align: right;
-  padding: 10px;
-  border: none;
-  background: #333;
-  color: #fff;
-  border-radius: 10px;
-  margin-bottom: 10px;
-}
+        /* --- Contenedor Principal de la Calculadora --- */
+        .calculadora {
+            background-color: var(--color-calculadora);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px var(--color-sombra);
+            padding: 20px;
+            width: 100%;
+            max-width: 350px; /* Ancho máximo para el diseño de escritorio/tablet */
+            transition: all 0.3s ease;
+        }
 
-.botones {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-}
+        /* --- Pantalla/Display --- */
+        #pantalla {
+            width: 100%;
+            height: 80px;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            font-size: 2.5em; /* Tamaño de fuente grande */
+            text-align: right;
+            border: none;
+            border-radius: 10px;
+            background-color: var(--color-fondo);
+            color: var(--color-texto);
+            box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden; 
+            user-select: none; /* Evita que el usuario pueda seleccionar el texto */
+        }
 
-.btn {
-  background: #444;
-  border: none;
-  color: white;
-  font-size: 1.5em;
-  padding: 15px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
+        /* --- Área de Botones (Usando Grid) --- */
+        .botones {
+            display: grid;
+            /* 4 columnas de igual tamaño */
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 10px; /* Espacio entre botones */
+        }
 
-.btn:hover {
-  background: #666;
-}
+        /* --- Estilo de los Botones --- */
+        .btn {
+            background-color: var(--color-numero);
+            color: var(--color-texto);
+            border: none;
+            padding: 20px;
+            font-size: 1.5em;
+            font-weight: 500;
+            border-radius: 15px; /* Más redondeado */
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
+            /* Asegura que los botones tengan una relación de aspecto cuadrada */
+            aspect-ratio: 1 / 1; 
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
 
-.igual {
-  grid-row: span 2;
-  background: #ff9500;
-}
+        .btn:hover {
+            background-color: #d1d1d6; 
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
+        }
 
-.igual:hover {
-  background: #ffa733;
-}
+        .btn:active {
+            transform: scale(0.95); 
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
 
-.cero {
-  grid-column: span 2;
-}
+        /* --- Estilos específicos de botones --- */
+
+        /* Operadores principales (/, *, -, +) */
+        .botones button:nth-child(3), 
+        .botones button:nth-child(4), 
+        .botones button:nth-child(8), 
+        .botones button:nth-child(12) { 
+            background-color: var(--color-operador);
+            color: var(--color-calculadora); 
+            font-weight: 600;
+        }
+
+        .botones button:nth-child(3):hover, 
+        .botones button:nth-child(4):hover, 
+        .botones button:nth-child(8):hover, 
+        .botones button:nth-child(12):hover {
+            background-color: #e68a00; /* Tono de naranja más oscuro */
+        }
+        
+        /* Botones C y ⌫ */
+        .botones button:nth-child(1),
+        .botones button:nth-child(2) {
+            background-color: #cccccc; 
+            color: var(--color-texto);
+            font-weight: 600;
+        }
+
+        .botones button:nth-child(1):hover,
+        .botones button:nth-child(2):hover {
+            background-color: #b3b3b3;
+        }
+
+        /* Botón de Igual (=) */
+        .igual {
+            background-color: var(--color-igual);
+            color: white;
+            grid-column: 4; /* Columna 4 (derecha) */
+            grid-row: 4 / span 2; /* Fila 4 y 5 */
+            display: flex; 
+            justify-content: center;
+            align-items: center;
+            aspect-ratio: unset;
+        }
+
+        .igual:hover {
+            background-color: #4cae4c; 
+        }
+
+        /* Botón Cero (0) - Ocupa dos columnas */
+        .cero {
+            grid-column: span 2; 
+            text-align: left;
+            padding-left: 35px; /* Ajuste para que el '0' esté a la izquierda */
+            aspect-ratio: unset;
+        }
+        
+        /* Botón Punto (.) - Se asegura de que esté en la posición correcta (Columna 3, Fila 5) */
+        .botones button:nth-child(19) {
+            grid-column: 3; 
+            grid-row: 5; 
+        }
+
+
+        /* --- Media Queries (Responsividad) --- */
+
+        /* Para pantallas más pequeñas (Móviles) */
+        @media (max-width: 400px) {
+            .calculadora {
+                max-width: 95%; /* Ocupa casi todo el ancho */
+                padding: 15px;
+                border-radius: 15px;
+            }
+            
+            #pantalla {
+                height: 60px;
+                font-size: 2em;
+                margin-bottom: 15px;
+            }
+            
+            .btn {
+                padding: 15px;
+                font-size: 1.2em;
+            }
+
+            .cero {
+                padding-left: 20px;
+            }
+        }
